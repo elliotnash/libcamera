@@ -33,3 +33,17 @@ v4l2_compat = shared_library('v4l2-compat',
                              install : true,
                              dependencies : [libcamera_private, libdl],
                              cpp_args : v4l2_compat_cpp_args)
+
+# Provide a wrapper script to support easily loading applications with the V4L2
+# adaptation layer
+
+config_h.set('LIBCAMERA_V4L2_SO', get_option('prefix') / get_option('libdir') / 'v4l2-compat.so')
+
+summary({
+    'LIBCAMERA_V4L2_SO' : config_h.get('LIBCAMERA_V4L2_SO'),
+}, section : 'Paths')
+
+configure_file(input : 'libcamera-v4l2.in',
+               output : 'libcamera-v4l2',
+               configuration : config_h,
+	       install_dir : get_option('bindir'))

@@ -1,0 +1,11 @@
+#!/bin/sh
+
+if [ "$LD_PRELOAD" = "" ] ; then
+   LD_PRELOAD='@LIBCAMERA_V4L2_SO@'
+else
+   LD_PRELOAD="$LD_PRELOAD "'@LIBCAMERA_V4L2_SO@'
+fi
+
+export LD_PRELOAD
+
+exec "$@"
